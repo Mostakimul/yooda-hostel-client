@@ -61,7 +61,7 @@ const StudentForm = () => {
         <Form.Group className="mb-3" controlId="studentRoll">
           <Form.Label>Roll</Form.Label>
           <Form.Control
-            type="text"
+            type="number"
             {...register('roll', { required: true })}
             placeholder="Enter student roll"
             required
@@ -87,13 +87,13 @@ const StudentForm = () => {
         <Form.Group className="mb-3" controlId="studentClass">
           <Form.Label>Class</Form.Label>
           <Form.Control
-            type="text"
-            {...register('class', { required: true })}
+            type="number"
+            {...register('stclass', { required: true })}
             placeholder="Enter student class"
             required
           />
           <Form.Control.Feedback type="invalid">
-            {errors.class && <span>This field is required</span>}
+            {errors.stclass && <span>This field is required</span>}
           </Form.Control.Feedback>
         </Form.Group>
         {/* Hall */}
