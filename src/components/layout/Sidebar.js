@@ -14,6 +14,9 @@ const Sidebar = () => {
         <NavLink as="li" className="list-group-item" to="/add-food">
           Add Food
         </NavLink>
+        <NavLink as="li" className="list-group-item" to="/add-students">
+          Add Students
+        </NavLink>
       </ul>
     </div>
   );
