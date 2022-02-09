@@ -3,7 +3,7 @@ import AdminPageLayout from '../components/layout/AdminPageLayout';
 
 const Home = () => {
   return (
-    <AdminPageLayout>
+    <AdminPageLayout pageTitle={'Home Page'}>
       <p>Home</p>
     </AdminPageLayout>
   );
