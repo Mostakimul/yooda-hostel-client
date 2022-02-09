@@ -1,12 +1,12 @@
 import React from 'react';
 import AdminPageLayout from '../components/layout/AdminPageLayout';
 
-const Home = () => {
+const FoodForm = () => {
   return (
     <AdminPageLayout>
-      <p>Home</p>
+      <p>Show all Foods</p>
     </AdminPageLayout>
   );
 };
 
-export default Home;
+export default FoodForm;
