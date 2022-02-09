@@ -3,24 +3,12 @@ import { Alert, Table } from 'react-bootstrap';
 import AdminPageLayout from '../components/layout/AdminPageLayout';
 import axios from 'axios';
 import Preloader from '../components/Preloader';
-
-// const allFoods = [
-//   { id: 1, name: 'Alu vorta', price: '10' },
-//   { id: 2, name: 'Kichuri', price: '80' },
-//   { id: 3, name: 'Singara', price: '10' },
-//   { id: 4, name: 'Shutki', price: '30' },
-//   { id: 5, name: 'Rui Fish', price: '60' },
-//   { id: 6, name: 'Chicken', price: '120' },
-//   { id: 7, name: 'Beef', price: '150' },
-//   { id: 8, name: 'Biriyani', price: '220' },
-//   { id: 9, name: 'Coca Cola', price: '20' },
-// ];
+import { Link } from 'react-router-dom';
 
 const FoodTable = (props) => {
   const { foodName, foodPrice } = props.food;
   return (
     <tr>
-      <td>{props.index + 1}</td>
       <td>{foodName}</td>
       <td>{foodPrice}</td>
     </tr>
@@ -30,13 +18,17 @@ const FoodTable = (props) => {
 const ShowFoods = () => {
   const [allFoods, setAllFoods] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
+  const [curPage, setCurPage] = useState(0);
+  const size = 5;
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get('http://localhost:5000/foods')
+      .get(`http://localhost:5000/foods?page=${curPage}&&size=${size}`)
       .then((res) => {
-        setAllFoods(res.data);
+        setAllFoods(res.data.result);
+        setPageCount(Math.ceil(res.data.count / size));
         setIsLoading(false);
       })
       .catch((err) => {
@@ -45,26 +37,41 @@ const ShowFoods = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [curPage]);
 
   return (
     <AdminPageLayout pageTitle={'Show all Foods'}>
       {isLoading && <Preloader />}
       {allFoods.length > 0 ? (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allFoods.map((food, index) => (
-              <FoodTable key={food._id} index={index} food={food} />
+        <>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allFoods.map((food, index) => (
+                <FoodTable key={food._id} index={index} food={food} />
+              ))}
+            </tbody>
+          </Table>
+
+          <ul className="pagination pagination-md">
+            {[...Array(pageCount).keys()].map((number) => (
+              <li
+                key={number}
+                className={`page-item ${number === curPage && 'active'}`}
+                onClick={() => setCurPage(number)}
+              >
+                <Link className="page-link" to="#">
+                  {number + 1}
+                </Link>
+              </li>
             ))}
-          </tbody>
-        </Table>
+          </ul>
+        </>
       ) : (
         <Alert variant="secondary">There is no item to show!</Alert>
       )}
