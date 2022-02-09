@@ -6,7 +6,7 @@ const Sidebar = () => {
     <div className="col-md-3">
       <ul className="list-group sticky-top py-2">
         <NavLink as="li" className="list-group-item" to="/">
-          Add Food
+          Home
         </NavLink>
         <NavLink as="li" className="list-group-item" to="/show-foods">
           Show All Food
