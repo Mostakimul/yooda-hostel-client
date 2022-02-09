@@ -14,7 +14,7 @@ const StudentTable = (props) => {
           onChange={props.onCheckValues}
           className="form-check-input"
           type="checkbox"
-          value={_id}
+          value={[_id, status]}
         />
       </td>
       <td>{fullName}</td>
@@ -26,16 +26,7 @@ const StudentTable = (props) => {
         {status === 'active' ? (
           <span className="badge bg-success">Active</span>
         ) : (
-          <>
-            <span className="badge bg-danger me-2">In active</span>
-            <span
-              onClick={() => console.log('hello')}
-              className="badge bg-warning"
-              style={{ cursor: ' pointer' }}
-            >
-              Make Active
-            </span>
-          </>
+          <span className="badge bg-danger me-2">In active</span>
         )}
       </td>
       <td>
@@ -67,6 +58,20 @@ const ShowStudents = () => {
   const [checkedStudents, setCheckedStudents] = useState([]);
   const [deleteStatus, setDeleteStatus] = useState(false);
 
+  let checkedIds = [];
+  if (checkedStudents.length > 0) {
+    console.log(checkedStudents);
+
+    checkedStudents.forEach((st) => {
+      let newArr = st.split(',');
+      if (checkedIds.indexOf(newArr[0]) === -1) {
+        checkedIds.push(newArr[0]);
+      }
+    });
+  }
+
+  console.log('checkedIds', checkedIds);
+
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -92,15 +97,16 @@ const ShowStudents = () => {
       ]);
     } else {
       const filterChecked = checkedStudents.filter(
-        (st) => st !== e.target.value,
+        (st) => st.split(',')[1] !== e.target.value.split(',')[1],
       );
       setCheckedStudents(filterChecked);
     }
   };
 
   const handleMultpleDelete = () => {
+    setIsLoading(true);
     axios
-      .post('http://localhost:5000/multi', checkedStudents)
+      .post('http://localhost:5000/multi', checkedIds)
       .then((res) => {
         if (res.status === 200) {
           setDeleteStatus(!deleteStatus);
@@ -113,6 +119,8 @@ const ShowStudents = () => {
       })
       .finally(() => {
         setIsLoading(false);
+        setCheckedStudents([]);
+        checkedIds = [];
       });
   };
 
@@ -134,6 +142,27 @@ const ShowStudents = () => {
       });
   };
 
+  const handleStatus = () => {
+    console.log('Checked Students:', checkedStudents);
+    axios
+      .post('http://localhost:5000/status', checkedStudents)
+      .then((res) => {
+        if (res.status === 200) {
+          setDeleteStatus(!deleteStatus);
+          setIsLoading(false);
+        }
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setCheckedStudents([]);
+        checkedIds = [];
+      });
+  };
+
   return (
     <AdminPageLayout pageTitle={'Show all students'}>
       {isLoading && <Preloader />}
@@ -142,11 +171,20 @@ const ShowStudents = () => {
           <button
             type="button"
             onClick={handleMultpleDelete}
-            className={`btn btn-danger my-2 ${
+            className={`btn btn-danger my-2 me-1 ${
               checkedStudents.length <= 0 && 'disabled'
             }`}
           >
             Delete Selected
+          </button>
+          <button
+            type="button"
+            onClick={handleStatus}
+            className={`btn btn-warning my-2 ms-1 ${
+              checkedStudents.length <= 0 && 'disabled'
+            }`}
+          >
+            Change Status
           </button>
 
           <Table striped bordered hover>
