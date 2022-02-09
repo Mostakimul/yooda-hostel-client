@@ -98,10 +98,25 @@ const ShowStudents = () => {
     }
   };
 
-  const handleMultpleDelete = () => {};
+  const handleMultpleDelete = () => {
+    axios
+      .post('http://localhost:5000/multi', checkedStudents)
+      .then((res) => {
+        if (res.status === 200) {
+          setDeleteStatus(!deleteStatus);
+          setIsLoading(false);
+        }
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   const handleSingleDelete = (id) => {
-    console.log(id);
     setIsLoading(true);
     axios
       .delete(`http://localhost:5000/students/${id}`)
