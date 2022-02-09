@@ -30,12 +30,14 @@ const StudentTable = (props) => {
         )}
       </td>
       <td>
-        <button
-          type="button"
-          className="btn btn-outline-primary btn-sm me-2 my-1"
-        >
-          Edit
-        </button>
+        <Link to={`/show-students/${_id}`}>
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm me-2 my-1"
+          >
+            Edit
+          </button>
+        </Link>
         <button
           onClick={() => props.handleSingleDelete(_id)}
           type="button"

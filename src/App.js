@@ -5,6 +5,7 @@ import FoodForm from './pages/FoodForm';
 import ShowFoods from './pages/ShowFoods';
 import StudentForm from './pages/StudentForm';
 import ShowStudents from './pages/ShowStudents';
+import EditStudent from './pages/EditStudent';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/show-foods" element={<ShowFoods />} />
         <Route path="/add-students" element={<StudentForm />} />
         <Route path="/show-students" element={<ShowStudents />} />
+        <Route path="/show-students/:id" element={<EditStudent />} />
       </Routes>
     </BrowserRouter>
   );
