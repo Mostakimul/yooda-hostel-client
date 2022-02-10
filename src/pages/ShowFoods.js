@@ -12,7 +12,7 @@ const FoodTable = (props) => {
       <td>{foodName}</td>
       <td>{foodPrice}</td>
       <td>
-        <Link to={`/edit-food`}>
+        <Link to={`/edit-foods/${_id}`}>
           <button
             type="button"
             className="btn btn-outline-primary btn-sm me-2 my-1"

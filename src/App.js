@@ -8,6 +8,7 @@ import ShowStudents from './pages/ShowStudents';
 import EditStudent from './pages/EditStudent';
 import DistributeFood from './pages/DistributeFood';
 import ServeForm from './pages/ServeForm';
+import EditFood from './pages/EditFood';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/show-students/:id" element={<EditStudent />} />
         <Route path="/distribution-food" element={<DistributeFood />} />
         <Route path="/serve-students/:id/:shift" element={<ServeForm />} />
+        <Route path="/edit-foods/:id" element={<EditFood />} />
       </Routes>
     </BrowserRouter>
   );
