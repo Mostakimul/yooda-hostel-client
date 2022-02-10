@@ -23,7 +23,7 @@ const EditStudent = () => {
   useEffect(() => {
     setIsLoading(false);
     axios
-      .get(`http://localhost:5000/students/${id}`)
+      .get(`https://aqueous-reef-45630.herokuapp.com/students/${id}`)
       .then((res) => {
         setStudent(res.data);
       })
@@ -38,7 +38,7 @@ const EditStudent = () => {
   const onSubmit = (data) => {
     setIsLoading(true);
     axios
-      .put(`http://localhost:5000/students/${id}`, data)
+      .put(`https://aqueous-reef-45630.herokuapp.com/students/${id}`, data)
       .then((res) => {
         console.log(res);
         if (res.data.acknowledged === true) {

@@ -73,7 +73,9 @@ const ShowStudents = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:5000/students?page=${curPage}&&size=${size}`)
+      .get(
+        `https://aqueous-reef-45630.herokuapp.com/students?page=${curPage}&&size=${size}`,
+      )
       .then((res) => {
         setAllStudents(res.data.result);
         setPageCount(Math.ceil(res.data.count / size));
@@ -104,7 +106,7 @@ const ShowStudents = () => {
   const handleMultpleDelete = () => {
     setIsLoading(true);
     axios
-      .post('http://localhost:5000/multi', checkedIds)
+      .post('https://aqueous-reef-45630.herokuapp.com/multi', checkedIds)
       .then((res) => {
         if (res.status === 200) {
           setDeleteStatus(!deleteStatus);
@@ -125,7 +127,7 @@ const ShowStudents = () => {
   const handleSingleDelete = (id) => {
     setIsLoading(true);
     axios
-      .delete(`http://localhost:5000/students/${id}`)
+      .delete(`https://aqueous-reef-45630.herokuapp.com/students/${id}`)
       .then((res) => {
         if (res.data.deletedCount === 1) {
           setDeleteStatus(!deleteStatus);
@@ -143,7 +145,7 @@ const ShowStudents = () => {
   const handleStatus = () => {
     console.log('Checked Students:', checkedStudents);
     axios
-      .post('http://localhost:5000/status', checkedStudents)
+      .post('https://aqueous-reef-45630.herokuapp.com/status', checkedStudents)
       .then((res) => {
         if (res.status === 200) {
           setDeleteStatus(!deleteStatus);

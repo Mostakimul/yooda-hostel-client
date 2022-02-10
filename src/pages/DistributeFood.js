@@ -17,7 +17,7 @@ const DistributeFood = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get('http://localhost:5000/students')
+      .get('https://aqueous-reef-45630.herokuapp.com/students')
       .then((res) => {
         setStudents(res.data.result);
         setIsLoading(false);
@@ -45,7 +45,7 @@ const DistributeFood = () => {
       id: filterId._id,
     };
     axios
-      .post('http://localhost:5000/distribution', data)
+      .post('https://aqueous-reef-45630.herokuapp.com/distribution', data)
       .then((res) => {
         if (res.data) {
           let resStuId = res.data.studentId;

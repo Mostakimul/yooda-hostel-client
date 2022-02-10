@@ -30,7 +30,7 @@ const ServeForm = () => {
     };
     setIsLoading(true);
     axios
-      .post(`http://localhost:5000/distribution-food`, data)
+      .post(`https://aqueous-reef-45630.herokuapp.com/distribution-food`, data)
       .then((res) => {
         if (res.data.acknowledged === true) {
           setIsLoading(false);

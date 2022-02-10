@@ -25,7 +25,9 @@ const ShowFoods = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:5000/foods?page=${curPage}&&size=${size}`)
+      .get(
+        `https://aqueous-reef-45630.herokuapp.com/foods?page=${curPage}&&size=${size}`,
+      )
       .then((res) => {
         setAllFoods(res.data.result);
         setPageCount(Math.ceil(res.data.count / size));
