@@ -62,8 +62,6 @@ const ShowStudents = () => {
 
   let checkedIds = [];
   if (checkedStudents.length > 0) {
-    console.log(checkedStudents);
-
     checkedStudents.forEach((st) => {
       let newArr = st.split(',');
       if (checkedIds.indexOf(newArr[0]) === -1) {
@@ -71,8 +69,6 @@ const ShowStudents = () => {
       }
     });
   }
-
-  console.log('checkedIds', checkedIds);
 
   useEffect(() => {
     setIsLoading(true);

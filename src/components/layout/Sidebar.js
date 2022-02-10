@@ -20,6 +20,9 @@ const Sidebar = () => {
         <NavLink as="li" className="list-group-item" to="/add-students">
           Add Students
         </NavLink>
+        <NavLink as="li" className="list-group-item" to="/distribution-food">
+          Distribute Food
+        </NavLink>
       </ul>
     </div>
   );
