@@ -6,11 +6,28 @@ import Preloader from '../components/Preloader';
 import { Link } from 'react-router-dom';
 
 const FoodTable = (props) => {
-  const { foodName, foodPrice } = props.food;
+  const { _id, foodName, foodPrice } = props.food;
   return (
-    <tr>
+    <tr className="text-center">
       <td>{foodName}</td>
       <td>{foodPrice}</td>
+      <td>
+        <Link to={`/edit-food`}>
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-sm me-2 my-1"
+          >
+            Edit
+          </button>
+        </Link>
+        <button
+          onClick={() => props.handleDelete(_id)}
+          type="button"
+          className="btn btn-outline-danger btn-sm my-1"
+        >
+          Delete
+        </button>
+      </td>
     </tr>
   );
 };
@@ -20,6 +37,7 @@ const ShowFoods = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [curPage, setCurPage] = useState(0);
+  const [deleteStatus, setDeleteStatus] = useState(false);
   const size = 5;
 
   useEffect(() => {
@@ -39,7 +57,25 @@ const ShowFoods = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [curPage]);
+  }, [curPage, deleteStatus]);
+
+  const handleDelete = (id) => {
+    setIsLoading(true);
+    axios
+      .delete(`https://aqueous-reef-45630.herokuapp.com/food/${id}`)
+      .then((res) => {
+        if (res.data.deletedCount === 1) {
+          setDeleteStatus(!deleteStatus);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <AdminPageLayout pageTitle={'Show all Foods'}>
@@ -48,14 +84,20 @@ const ShowFoods = () => {
         <>
           <Table striped bordered hover>
             <thead>
-              <tr>
+              <tr className="text-center">
                 <th>Name</th>
                 <th>Price</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {allFoods.map((food, index) => (
-                <FoodTable key={food._id} index={index} food={food} />
+                <FoodTable
+                  key={food._id}
+                  index={index}
+                  food={food}
+                  handleDelete={handleDelete}
+                />
               ))}
             </tbody>
           </Table>
